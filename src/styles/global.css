@@ -1,0 +1,145 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Lato:wght@400;700&family=Poppins:wght@600;700&family=Montserrat:wght@500;600&display=swap");
+@import "tailwindcss";
+
+/* Modo oscuro por clase: dark:... se aplica cuando <html> tiene .dark */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Colores principales */
+  --color-accent: #a4632f; /* caramelo tostado */
+  --color-accent-hover: #87501f;
+  --color-soft: #d9bf9f; /* latte */
+
+  /* Fondos */
+  --color-background: #f5f0eb; /* fondo general */
+  --color-background-hover: #ebe2d8;
+  --color-surface: #fbf8f5; /* tarjetas */
+  --color-header: #ede3d8; /* crema tostada */
+  --color-footer: #1e1510; /* casi negro café */
+
+  /* Bordes y texto */
+  --color-border: #e0d6cc;
+  --color-text: #3b2a20; /* espresso */
+  --color-text-muted: #7a6656;
+  --color-cream: #f5f0eb; /* texto claro fijo (footer), no cambia en dark */
+
+  /* Fuentes */
+  --font-heading: "Playfair Display", Georgia, serif;
+  --font-body: "Lato", system-ui, sans-serif;
+  --font-button: "Poppins", system-ui, sans-serif;
+  --font-nav: "Montserrat", system-ui, sans-serif;
+
+  /* Tamaños de letra (fluidos) */
+  --text-h1: clamp(2.25rem, 1.6rem + 3.2vw, 4rem);
+  --text-h2: clamp(1.75rem, 1.35rem + 2vw, 2.75rem);
+  --text-h3: clamp(1.375rem, 1.15rem + 1.1vw, 1.875rem);
+  --text-p: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-small: clamp(0.8125rem, 0.78rem + 0.15vw, 0.875rem);
+  --text-nav: clamp(0.875rem, 0.84rem + 0.2vw, 1rem);
+  --text-button: clamp(0.9375rem, 0.9rem + 0.2vw, 1.0625rem);
+}
+
+.dark {
+  --color-accent-hover: #b87333;
+
+  --color-background: #1a120d;
+  --color-background-hover: #302219;
+  --color-surface: #251a14;
+  --color-header: #2b1f18;
+
+  --color-border: #3d2e24;
+  --color-text: #f0e6dc;
+  --color-text-muted: #b8a594;
+
+  color-scheme: dark; /* scrollbar e inputs del navegador en oscuro */
+}
+
+/* (Por si en algun momento quiero cambiar la escala) Estilos por defecto de las etiquetas */
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-background text-text font-body text-p leading-relaxed;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-heading font-bold leading-tight;
+  }
+
+  h1 { @apply text-h1; }
+  h2 { @apply text-h2; }
+  h3 { @apply text-h3; }
+}
+
+/* Elementos reutilizables */
+@layer components {
+  /* Enlaces del header: en móvil son "filas" del menú, desde md texto normal */
+  .menu-link {
+    @apply block rounded-xl border border-border bg-surface py-3 text-center transition-colors focus-visible:ring-2 focus-visible:ring-accent hover:bg-background-hover hover:text-accent;
+    @apply md:border-0 md:bg-transparent md:py-0 md:hover:bg-transparent;
+  }
+
+  .btn {
+    @apply inline-block rounded-full px-6 py-3 font-button text-button font-semibold transition-colors cursor-pointer;
+  }
+
+  .btn-primary {
+    @apply bg-accent text-white focus-visible:ring-2 focus-visible:ring-accent-hover hover:bg-accent-hover;
+  }
+
+  .btn-soft {
+    @apply bg-soft text-text focus-visible:ring-2 focus-visible:ring-accent hover:bg-accent hover:text-white;
+    @apply dark:bg-soft/15 dark:text-soft dark:focus-visible:ring-2 dark:focus-visible:ring-accent/40;
+  }
+
+  .card {
+    @apply flex flex-col rounded-2xl border relative isolate overflow-hidden border-border bg-surface shadow-2xs p-6 transition hover:shadow-lg motion-safe:hover:-translate-y-1;
+  }
+
+  .plan {
+    @apply rounded-2xl border border-border bg-surface p-8;
+  }
+
+  .plan-popular {
+    @apply relative rounded-2xl border-2 border-accent bg-surface p-8 shadow-lg md:scale-105;
+  }
+
+  .step {
+    @apply flex items-center gap-3;
+  }
+}
+
+@layer sections {
+
+  .coffe-header {
+    @apply sticky top-0 z-50 bg-header/80 backdrop-blur-md border-b border-border;
+  }
+
+  .coffe-hero-section {
+    @apply mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 md:grid-cols-2;
+  }
+
+  .coffe-cards-section {
+    @apply mx-auto max-w-6xl px-4 py-16;
+  }
+
+  .coffe-steps-section{
+    @apply border-y border-border bg-header;
+  }
+
+  .coffe-plans-section {
+    @apply mx-auto max-w-6xl px-4 py-16;
+  }
+
+  .coffe-faq-section {
+    @apply mx-auto max-w-3xl px-4 py-16;
+  }
+
+  .coffe-footer {
+    @apply bg-footer text-cream dark:border-t dark:border-border;
+  }
+}
